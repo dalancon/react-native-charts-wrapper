@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import update from 'immutability-helper';
 
-import {LineChart} from 'react-native-charts-wrapper';
+import { LineChart } from 'react-native-charts-wrapper';
 
 class LineChartScreen extends React.Component {
 
@@ -16,11 +16,15 @@ class LineChartScreen extends React.Component {
 
     this.state = {
       data: {},
+      animation: {
+        easingX: 'Linear',
+        durationX: 500,
+      },
       legend: {
         enabled: true,
         textColor: processColor('blue'),
         textSize: 12,
-        position: 'BELOW_CHART_RIGHT',
+        position: 'ABOVE_CHART_RIGHT',
         form: 'SQUARE',
         formSize: 14,
         xEntrySpace: 10,
@@ -28,17 +32,58 @@ class LineChartScreen extends React.Component {
         formToTextSpace: 5,
         wordWrapEnabled: true,
         maxSizePercent: 0.5,
-        custom: {
-          colors: [processColor('red'), processColor('blue'), processColor('green')],
-          labels: ['Company X', 'Company Y', 'Company Dashed']
-        }
+        // custom: {
+        //   colors: [processColor('red'), processColor('blue'), processColor('green')],
+        //   labels: ['Company X', 'Company Y', 'Company Dashed']
+        // }
+      },
+      yAxis: {
+        left: {
+          textSize: 13,
+          textColor: processColor('#CECECE'),
+          // 控制y轴的数值线样式
+          gridColor: processColor('#FDFBEF'),
+          gridLineWidth: 1,
+          // y轴左边线条样式
+          // drawAxisLine: true,
+          axisLineWidth: 1,
+          axisLineColor: processColor('#14BE4B'),
+          spaceTop: 5,
+          // 控制x轴文字
+          spaceBottom: 5,
+          // 控制x轴线的样式
+          zeroLine: {
+            lineColor: processColor('#14BE4B'),
+            lineWidth: 1,
+            enabled: true,
+          },
+          drawTopYLabelEntryEnabled: false,
+          labelCount: 5,
+        },
+        right: {
+          drawGridLines: false,
+          enabled: false,
+        },
+      },
+      xAxis: {
+        position: 'BOTTOM',
+        textSize: 12,
+        textColor: processColor('#cecece'),
+        drawGridLines: false,
+        drawAxisLine: true,
+        axisLineWidth: 1,
+        axisLineColor: processColor('#14BE4B'),
+        spaceBetweenLabels: 1,
+        // 控制X轴的数值线样式
+        // gridColor: processColor('#FDFBEF'),
+        // gridLineWidth: 1,
+        valueFormatter: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7']
       },
       marker: {
         enabled: true,
         backgroundTint: processColor('teal'),
-	      markerColor: processColor('#F0C0FF8C'),
+        markerColor: processColor('#F0C0FF8C'),
         textColor: processColor('white'),
-
       }
     };
   }
@@ -49,54 +94,63 @@ class LineChartScreen extends React.Component {
         data: {
           $set: {
             dataSets: [{
-              values: [{y: 100}, {y: 110}, {y: 105}, {y: 115}],
+              values: [{ y: 100 }, { y: 110 }, { y: 105 }, { y: 115 }, { y: 50 }, { y: 65 }, { y: 105 }],
               label: 'Company X',
               config: {
                 lineWidth: 2,
-                drawCircles: false,
+                drawCircles: true,
+                //设置空心圆的大小
+                // circleRadius: 3,
+                circleColor: processColor('#14BE4B'),
                 highlightColor: processColor('red'),
-                color: processColor('red'),
-                drawFilled: true,
-                fillColor: processColor('red'),
+                color: processColor('#14BE4B'),
+                // 空心圆的颜色
+                circleHoleColor: processColor('white'),
+                drawCircleHole: true,
+                //线条模式 。可以设置为贝塞尔曲线 。LineDataSet.Mode  （LINEAR,STEPPED, CUBIC_BEZIER,HORIZONTAL_BEZIER）
+                //mode: 'HORIZONTAL_BEZIER',
+                // 阴影控制
+                // drawFilled: true,
+                // fillColor: processColor('#14BE4B'),
                 fillAlpha: 60,
-		            valueTextSize: 15,
+                // 设置折线图节点的数据是否显示
+                drawValues: false,
+                valueTextSize: 15,
                 valueFormatter: "##.000",
-                dashedLine: {
-                  lineLength: 20,
-                  spaceLength: 20
-                }
+                // dashedLine: {
+                //   lineLength: 20,
+                //   spaceLength: 20
+                // }
               }
-            }, {
-              values: [{y: 90}, {y: 130}, {y: 100}, {y: 105}],
-              label: 'Company Y',
-              config: {
-                lineWidth: 1,
-                drawCubicIntensity: 0.4,
-                circleRadius: 5,
-                drawHighlightIndicators: false,
-                color: processColor('blue'),
-                drawFilled: true,
-                fillColor: processColor('blue'),
-                fillAlpha: 45,
-                circleColor: processColor('blue')
-              }
-            }, {
-              values: [{y: 110}, {y: 105}, {y: 115}, {y: 110}],
-              label: 'Company Dashed',
-              config: {
-                color: processColor('green'),
-                drawFilled: true,
-                fillColor: processColor('green'),
-                fillAlpha: 50
-              }
-            }],
+            }
+              // , {
+              //   values: [{y: 90}, {y: 130}, {y: 100}, {y: 105}],
+              //   label: 'Company Y',
+              //   config: {
+              //     lineWidth: 1,
+              //     drawCubicIntensity: 0.4,
+              //     circleRadius: 5,
+              //     drawHighlightIndicators: false,
+              //     color: processColor('blue'),
+              //     drawFilled: true,
+              //     fillColor: processColor('blue'),
+              //     fillAlpha: 45,
+              //     circleColor: processColor('blue')
+              //   }
+              // }, {
+              //   values: [{y: 110}, {y: 105}, {y: 115}, {y: 110}],
+              //   label: 'Company Dashed',
+              //   config: {
+              //     color: processColor('green'),
+              //     drawFilled: true,
+              //     fillColor: processColor('green'),
+              //     fillAlpha: 50
+              //   }
+              // }
+            ],
           }
         },
-        xAxis: {
-          $set: {
-            valueFormatter: ['Q1', 'Q2', 'Q3', 'Q4']
-          }
-        }
+
       })
     );
   }
@@ -104,42 +158,36 @@ class LineChartScreen extends React.Component {
   handleSelect(event) {
     let entry = event.nativeEvent
     if (entry == null) {
-      this.setState({...this.state, selectedEntry: null})
+      this.setState({ ...this.state, selectedEntry: null })
     } else {
-      this.setState({...this.state, selectedEntry: JSON.stringify(entry)})
+      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
     }
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-
-        <View style={{height:80}}>
-          <Text> selected entry</Text>
-          <Text> {this.state.selectedEntry}</Text>
-        </View>
+      <View style={{ flex: 1 }}>
 
         <View style={styles.container}>
           <LineChart
             style={styles.chart}
             data={this.state.data}
-            description={{text: ''}}
+            description={{ text: '' }}
             legend={this.state.legend}
-            marker={this.state.marker}
             xAxis={this.state.xAxis}
+            yAxis={this.state.yAxis}
             drawGridBackground={false}
-            borderColor={processColor('teal')}
+            borderColor={processColor('blue')}
             borderWidth={1}
-            drawBorders={true}
-
+            drawBorders={false}
             touchEnabled={true}
             dragEnabled={true}
-            scaleEnabled={true}
+            scaleEnabled={false}
             scaleXEnabled={true}
-            scaleYEnabled={true}
+            scaleYEnabled={false}
             pinchZoom={true}
-            doubleTapToZoomEnabled={true}
-
+            doubleTapToZoomEnabled={false}
+            animation={this.state.animation}
             dragDecelerationEnabled={true}
             dragDecelerationFrictionCoef={0.99}
 
@@ -159,7 +207,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   chart: {
-    flex: 1
+    height: 220,
   }
 });
 
