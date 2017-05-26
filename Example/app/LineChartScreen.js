@@ -77,7 +77,9 @@ class LineChartScreen extends React.Component {
         // 控制X轴的数值线样式
         // gridColor: processColor('#FDFBEF'),
         // gridLineWidth: 1,
-        valueFormatter: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7']
+        valueFormatter: ['201701', '201702', '201703', '201704', '201705', '201706', '201707'],
+        // 设置x轴文字倾斜
+        labelRotationAngle: 45,
       },
       marker: {
         enabled: true,
@@ -94,7 +96,7 @@ class LineChartScreen extends React.Component {
         data: {
           $set: {
             dataSets: [{
-              values: [{ y: 100 }, { y: 110 }, { y: 105 }, { y: 115 }, { y: 50 }, { y: 65 }, { y: 105 }],
+              values: [{ x: 0, y: 100 }, { x: 1, y: 110 }, { x: 2, y: 105 }, { x: 3, y: 115 }, { x: 4, y: 50 }, { x: 6, y: 65 }, { x: 7, y: 105 }],
               label: 'Company X',
               config: {
                 lineWidth: 2,
