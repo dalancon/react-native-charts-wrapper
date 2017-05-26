@@ -23,6 +23,8 @@ public class CustomFormatter implements IAxisValueFormatter, IValueFormatter {
 
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-        return mFormat.format(value);
+        if (value > 0)
+            return mFormat.format(value);
+        return "";
     }
 }

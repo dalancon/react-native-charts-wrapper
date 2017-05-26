@@ -74,7 +74,8 @@ class StackedBarChartScreen extends React.Component {
             // 柱子上的文字样式
             valueTextSize: 6,
             valueTextColor: processColor('#FFFFFF'),
-            valueFormatter: '',
+            //筛选本地数据0 的显示屏蔽
+            valueFormatter: '###,###,###,##0.0',
           }
         }],
         config: {
