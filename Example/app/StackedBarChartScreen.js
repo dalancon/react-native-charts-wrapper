@@ -6,7 +6,7 @@ import {
   View, processColor
 } from 'react-native';
 
-import {BarChart} from 'react-native-charts-wrapper';
+import { BarChart } from 'react-native-charts-wrapper';
 
 class StackedBarChartScreen extends React.Component {
 
@@ -14,30 +14,84 @@ class StackedBarChartScreen extends React.Component {
     super();
 
     this.state = {
+      chartDescription: {
+        text: '本周工时',
+        textColor: '#7f7f7f',
+        textSize: 12,
+        positionX: 10,
+        positionY: 0,
+      },
+      animation: {
+        easingX: 'Linear',
+        easingY: 'Linear',
+        durationX: 1000,
+        durationY: 1000,
+      },
       legend: {
         enabled: true,
         textSize: 14,
         form: "SQUARE",
         formSize: 14,
-        xEntrySpace: 10,
+        xEntrySpace: 5,
         yEntrySpace: 5,
-        wordWrapEnabled: true
+        wordWrapEnabled: true,
+        position: 'ABOVE_CHART_RIGHT',
+        xOffset: 0,
+        formToTextSpace: 5,
+      },
+      yAxis: {
+        left: {
+          textSize: 13,
+          textColor: processColor('#CECECE'),
+          // 控制y轴的数值线样式
+          gridColor: processColor('#FDFBEF'),
+          gridLineWidth: 1,
+          drawAxisLine: false,
+          spaceTop: 5,
+          // 控制x轴文字
+          spaceBottom: 5,
+          // 控制x轴线的样式
+          zeroLine: {
+            lineColor: processColor('#e5e5e5'),
+            lineWidth: 1,
+            enabled: false,
+          },
+          drawTopYLabelEntryEnabled: false,
+          labelCount: 5,
+        },
+        right: {
+          drawGridLines: false,
+          enabled: false,
+        },
       },
       data: {
         dataSets: [{
-          values: [{y:[40, 30, 20], marker: ["row1", "row2", "row3"]}, {y:[10, 20, 10], marker:"second"}, {y:[30, 20, 50], marker:["hello", "world","third"]}, {y:[30, 50, 10], marker:"fourth"}],
-          label: 'Stacked Bar dataset',
+          values: [{ y: [0, 0, 2] }, { y: [1, 0, 8] }, { y: [3, 0, 5] }, { y: [0, 0, 10] }, { y: [0, 0, 10] }, { y: [0, 0, 10] }, { y: [0, 5, 0] }],
+          label: '',
           config: {
-            colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C')],
-            stackLabels: ['Engineering', 'Sales', 'Marketing']
+            colors: [processColor('#14BE4B'), processColor('#F9BF13'), processColor('#129CF5')],
+            stackLabels: ['Engineering', 'Sales', 'Marketing'],
+            // 柱子上的文字样式
+            valueTextSize: 6,
+            valueTextColor: processColor('#FFFFFF'),
+            valueFormatter: '',
           }
         }],
+        config: {
+          barWidth: 0.5,
+        }
       },
       xAxis: {
-        valueFormatter: ['Q1', 'Q2', 'Q3', 'Q4'],
-        granularityEnabled: true,
-        granularity: 1
-
+        position: 'BOTTOM',
+        textSize: 12,
+        textColor: processColor('#cecece'),
+        drawGridLines: false,
+        drawAxisLine: false,
+        spaceBetweenLabels: 1,
+        valueFormatter: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        axisLineWidth: StyleSheet.hairlineWidth,
+        axisLineColor: processColor('#e5e5e5'),
+        gridLineWidth: 1,
       }
 
     };
@@ -46,40 +100,30 @@ class StackedBarChartScreen extends React.Component {
   handleSelect(event) {
     let entry = event.nativeEvent
     if (entry == null) {
-      this.setState({...this.state, selectedEntry: null})
+      this.setState({ ...this.state, selectedEntry: null })
     } else {
-      this.setState({...this.state, selectedEntry: JSON.stringify(entry)})
+      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
     }
   }
 
   render() {
     return (
-
-      <View style={{flex: 1}}>
-
-        <View style={{height:80}}>
-          <Text> selected entry</Text>
-          <Text> {this.state.selectedEntry}</Text>
-        </View>
-
-        <View style={styles.container}>
-          <BarChart
-            style={styles.chart}
-            xAxis={this.state.xAxis}
-            data={this.state.data}
-            legend={this.state.legend}
-            drawValueAboveBar={false}
-            marker={{
-        enabled: true,
-        markerColor: processColor('#F0C0FF8C'),
-        textColor: processColor('white'),
-        markerFontSize: 14,
-      }}
-            onSelect={this.handleSelect.bind(this)}
-          />
-        </View>
-
-      </View>
+        <BarChart
+          style={styles.chart}
+          chartDescription={this.state.chartDescription}
+          xAxis={this.state.xAxis}
+          yAxis={this.state.yAxis}
+          data={this.state.data}
+          legend={this.state.legend}
+          doubleTapToZoomEnabled={false}
+          touchEnabled={false}
+          chartBackgroundColor={processColor('#eeeeee')}
+          scaleXEnabled={false}
+          scaleYEnabled={false}
+          drawValueAboveBar={false}
+          animation={this.state.animation}
+          
+        />
     );
   }
 }
@@ -90,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   chart: {
-    flex: 1
+    height: 220,
   }
 });
 
