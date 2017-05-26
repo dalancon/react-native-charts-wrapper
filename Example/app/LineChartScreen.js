@@ -47,7 +47,7 @@ class LineChartScreen extends React.Component {
           // y轴左边线条样式
           // drawAxisLine: true,
           axisLineWidth: 1,
-          axisLineColor: processColor('#14BE4B'),
+          axisLineColor: processColor('#3314BE4B'),
           spaceTop: 5,
           // 控制x轴文字
           spaceBottom: 5,
@@ -72,7 +72,7 @@ class LineChartScreen extends React.Component {
         drawGridLines: false,
         drawAxisLine: true,
         axisLineWidth: 1,
-        axisLineColor: processColor('#14BE4B'),
+        axisLineColor: processColor('#3314BE4B'),
         spaceBetweenLabels: 1,
         // 控制X轴的数值线样式
         // gridColor: processColor('#FDFBEF'),
